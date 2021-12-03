@@ -34,8 +34,7 @@ public class MainActivity extends Activity implements View.OnTouchListener {
     public boolean onTouch(View view, MotionEvent motionEvent) {
         switch (motionEvent.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                x = motionEvent.getX();
-                y = motionEvent.getY();
+                path.moveTo(x = motionEvent.getX(), y = motionEvent.getX());
                 break;
             case MotionEvent.ACTION_MOVE:
                 path.lineTo(x = motionEvent.getX(), y = motionEvent.getX());
