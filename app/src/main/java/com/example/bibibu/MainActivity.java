@@ -19,10 +19,10 @@ import java.util.ArrayList;
 public class MainActivity extends Activity {
 
     static ArrayList<Path> paths;
+    static ArrayList<Paint> paints;
+    static ArrayList<Integer> sizes;
     static Paint p;
     static Path path;
-    public ImageButton clear, plus, minus;
-    Button white, black, red, green, blue, yellow;
     static int size = 3;
 
     @Override
@@ -31,6 +31,8 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         path = new Path();
         paths = new ArrayList<>();
+        paints = new ArrayList<>();
+        sizes = new ArrayList<>();
         p = new Paint();
         p.setColor(Color.BLACK);
         p.setStrokeWidth(size);
@@ -47,6 +49,8 @@ public class MainActivity extends Activity {
         @Override
         protected void onDraw(Canvas canvas) {
             for (int i =0; i< paths.size(); i++){
+                p.setColor(paints.get(i).getColor());
+                p.setStrokeWidth(sizes.get(i));
                 canvas.drawPath(paths.get(i), p);
             }
         }
@@ -58,12 +62,13 @@ public class MainActivity extends Activity {
             switch (motionEvent.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     path.moveTo(x, y);
-                    paths.add(path);
                     invalidate();
                     return true;
                 case MotionEvent.ACTION_MOVE:
                     path.lineTo(x, y);
                     paths.add(path);
+                    paints.add(p);
+                    sizes.add(size);
                     invalidate();
                     return true;
                 default:
@@ -78,6 +83,7 @@ public class MainActivity extends Activity {
     public void minus(View v){
         if(size != 1){
             size--;
+            p = new Paint();
             p.setStrokeWidth(size);
         }
     }
