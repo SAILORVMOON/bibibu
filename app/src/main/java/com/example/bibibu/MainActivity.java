@@ -19,7 +19,8 @@ import java.util.ArrayList;
 public class MainActivity extends Activity {
 
     static ArrayList<Path> paths;
-    static ArrayList<Paint> paints;
+    static ArrayList<Integer> sizes;
+    static ArrayList<Integer> colors;
     static Paint p;
     static Path path;
     static int size = 3;
@@ -30,7 +31,8 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         path = new Path();
         paths = new ArrayList<>();
-        paints = new ArrayList<>();
+        sizes = new ArrayList<>();
+        colors = new ArrayList<>();
         p = new Paint();
         p.setColor(Color.BLACK);
         p.setStrokeWidth(size);
@@ -47,7 +49,9 @@ public class MainActivity extends Activity {
         @Override
         protected void onDraw(Canvas canvas) {
             for (int i =0; i< paths.size(); i++){
-                canvas.drawPath(paths.get(i), paints.get(i));
+                p.setStrokeWidth(sizes.get(i));
+                p.setColor(colors.get(i));
+                canvas.drawPath(paths.get(i), p);
             }
         }
 
@@ -58,12 +62,12 @@ public class MainActivity extends Activity {
             switch (motionEvent.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     path.moveTo(x, y);
-                    invalidate();
                     return true;
                 case MotionEvent.ACTION_MOVE:
                     path.lineTo(x, y);
                     paths.add(path);
-                    paints.add(p);
+                    sizes.add(size);
+                    colors.add(p.getColor());
                     invalidate();
                     return true;
                 default:
