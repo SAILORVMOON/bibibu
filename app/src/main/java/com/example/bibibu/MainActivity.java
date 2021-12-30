@@ -20,7 +20,6 @@ public class MainActivity extends Activity {
 
     static ArrayList<Path> paths;
     static ArrayList<Paint> paints;
-    static ArrayList<Integer> sizes;
     static Paint p;
     static Path path;
     static int size = 3;
@@ -32,7 +31,6 @@ public class MainActivity extends Activity {
         path = new Path();
         paths = new ArrayList<>();
         paints = new ArrayList<>();
-        sizes = new ArrayList<>();
         p = new Paint();
         p.setColor(Color.BLACK);
         p.setStrokeWidth(size);
@@ -49,9 +47,7 @@ public class MainActivity extends Activity {
         @Override
         protected void onDraw(Canvas canvas) {
             for (int i =0; i< paths.size(); i++){
-                p.setColor(paints.get(i).getColor());
-                p.setStrokeWidth(sizes.get(i));
-                canvas.drawPath(paths.get(i), p);
+                canvas.drawPath(paths.get(i), paints.get(i));
             }
         }
 
@@ -68,7 +64,6 @@ public class MainActivity extends Activity {
                     path.lineTo(x, y);
                     paths.add(path);
                     paints.add(p);
-                    sizes.add(size);
                     invalidate();
                     return true;
                 default:
